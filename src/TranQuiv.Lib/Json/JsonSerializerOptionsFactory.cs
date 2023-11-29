@@ -9,7 +9,7 @@ namespace TranQuiv.Lib.Json;
 public static class JsonSerializerOptionsFactory
 {
     /// <summary>
-    /// Default value with options: <c>CaseInsensitive, UnsafeRelaxedJsonEscaping</c>
+    /// Default value with enabled options: <see langword="CaseInsensitive, UnsafeRelaxedJsonEscaping"/>
     /// </summary>
     /// <value></value>
     public static JsonSerializerOptions Instance

@@ -1,15 +1,16 @@
 using System.Security.Cryptography;
 using System.Text;
+using System.ComponentModel.DataAnnotations;
 
 namespace TranQuiv.Lib.Crypto;
 
 /// <summary>
-/// A wrapper around <see cref="System.Security.Cryptography.Aes"/> for the ease of use.
+/// A wrapper around <see cref="Aes"/> for the ease of use.
 /// </summary>
 public static class AesCrypto
 {
     /// <summary>
-    /// Encrypts plain text using <see cref="System.Security.Cryptography.Aes"/> algorithm.
+    /// Encrypts plain text using <see cref="Aes"/> algorithm.
     /// <para>If <paramref name="iv"/> is specified, the encryption will use CBC mode, otherwise ECB mode.</para>
     /// </summary>
     /// <returns>Base64 encrypted string</returns>
@@ -37,7 +38,7 @@ public static class AesCrypto
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="ArgumentOutOfRangeException" />
     /// <exception cref="CryptographicException" />
-    public static string Encrypt(string plainText, string key, byte[]? iv = null)
+    public static string Encrypt(string plainText, [Base64String] string key, byte[]? iv = null)
     {
         var keyBytes = Convert.FromBase64String(key);
         return Encrypt(plainText, keyBytes, iv);
@@ -52,7 +53,7 @@ public static class AesCrypto
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="ArgumentOutOfRangeException" />
     /// <exception cref="CryptographicException" />
-    public static string Encrypt(string plainText, string key, string? iv = null)
+    public static string Encrypt(string plainText, [Base64String] string key, [Base64String] string? iv = null)
     {
         var ivBytes = iv is null ? null : Convert.FromBase64String(iv);
         return Encrypt(plainText, key, ivBytes);
@@ -67,7 +68,7 @@ public static class AesCrypto
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="ArgumentOutOfRangeException" />
     /// <exception cref="CryptographicException" />
-    public static string Decrypt(string encrypted, byte[] key, byte[]? iv = null)
+    public static string Decrypt([Base64String] string encrypted, byte[] key, byte[]? iv = null)
     {
         var encryptedBytes = Convert.FromBase64String(encrypted);
 
@@ -88,7 +89,7 @@ public static class AesCrypto
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="ArgumentOutOfRangeException" />
     /// <exception cref="CryptographicException" />
-    public static string Decrypt(string encrypted, string key, byte[]? iv = null)
+    public static string Decrypt([Base64String] string encrypted, [Base64String] string key, byte[]? iv = null)
     {
         var keyBytes = Convert.FromBase64String(key);
         return Decrypt(encrypted, keyBytes, iv);
@@ -103,7 +104,7 @@ public static class AesCrypto
     /// <exception cref="ArgumentNullException" />
     /// <exception cref="ArgumentOutOfRangeException" />
     /// <exception cref="CryptographicException" />
-    public static string Decrypt(string encrypted, string key, string? iv = null)
+    public static string Decrypt([Base64String] string encrypted, [Base64String] string key, [Base64String] string? iv = null)
     {
         var ivBytes = iv is null ? null : Convert.FromBase64String(iv);
         return Decrypt(encrypted, key, ivBytes);

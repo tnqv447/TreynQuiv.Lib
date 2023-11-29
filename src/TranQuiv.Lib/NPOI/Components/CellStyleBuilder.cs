@@ -15,7 +15,9 @@ internal class CellStyleBuilder : ICellStyleBuilder
 
     public virtual ICellStyle Export()
     {
-        return _style;
+        var exportStyle = _wb.CreateCellStyle();
+        exportStyle.CloneStyleFrom(_style);
+        return exportStyle;
     }
 
     public virtual ICellStyleBuilder Clone(ICellStyle otherStyle)

@@ -7,7 +7,7 @@ using Serilog.Events;
 
 namespace TranQuiv.Lib.Console;
 
-class ThreadIdEnricher : ILogEventEnricher
+internal class ThreadIdEnricher : ILogEventEnricher
 {
     public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
     {

@@ -11,7 +11,7 @@ public static class ApplicationBuilderExtensions
     {
         return builder.Use(async (context, next) =>
         {
-            context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            context.Response.Headers.XContentTypeOptions = "nosniff";
             await next();
         });
     }
@@ -23,7 +23,7 @@ public static class ApplicationBuilderExtensions
     {
         return builder.Use(async (context, next) =>
         {
-            context.Response.Headers.Add("X-Frame-Options", "SAMEORIGIN");
+            context.Response.Headers.XFrameOptions = "SAMEORIGIN";
             await next();
         });
     }

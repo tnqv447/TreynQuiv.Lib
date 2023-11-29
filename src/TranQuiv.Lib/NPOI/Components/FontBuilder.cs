@@ -16,7 +16,9 @@ internal class FontBuilder : IFontBuilder
 
     public virtual IFont Export()
     {
-        return _font;
+        var exportFont = _wb.CreateFont();
+        exportFont.CloneStyleFrom(_font);
+        return exportFont;
     }
 
     public virtual IFontBuilder Clone(IFont font)
