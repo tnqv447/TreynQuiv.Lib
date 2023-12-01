@@ -2,7 +2,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace TranQuiv.Lib.Extensions;
+namespace TranQuiv.Lib.Common.Extensions;
 
 public static class AttributeAccessorExtensions
 {

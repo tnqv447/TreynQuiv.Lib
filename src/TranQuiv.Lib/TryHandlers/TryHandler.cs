@@ -84,7 +84,7 @@ public class TryHandler
     public virtual TryEnsuredResult<T> TryEnsure<T>(Func<T> action, Action<Exception>? localExceptionHandleAction = null) where T : new()
     {
         var tryResult = Try(action, localExceptionHandleAction);
-        return tryResult ? new(true, tryResult.Result ?? new()) : new(false, new());
+        return tryResult ? new(true, tryResult.Value ?? new()) : new(false, new());
     }
 
     public virtual TryEnsuredResult<T> TryFallBack<T>(in T fallbackValue,
@@ -92,7 +92,7 @@ public class TryHandler
                                        Action<Exception>? localExceptionHandleAction = null)
     {
         var tryResult = Try(action, localExceptionHandleAction);
-        return tryResult ? new(true, tryResult.Result ?? fallbackValue) : new(false, fallbackValue);
+        return tryResult ? new(true, tryResult.Value ?? fallbackValue) : new(false, fallbackValue);
     }
 
     #region Inline
@@ -106,19 +106,19 @@ public class TryHandler
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T? TryInline<T>(Func<T?> action, Action<Exception>? localExceptionHandleAction = null)
     {
-        return Try(action, localExceptionHandleAction).Result;
+        return Try(action, localExceptionHandleAction).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T TryEnsureInline<T>(Func<T> action, Action<Exception>? localExceptionHandleAction = null) where T : new()
     {
-        return TryEnsure(action, localExceptionHandleAction).Result;
+        return TryEnsure(action, localExceptionHandleAction).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T TryFallBackInline<T>(in T fallbackValue, Func<T> action, Action<Exception>? localExceptionHandleAction = null)
     {
-        return TryFallBack(fallbackValue, action, localExceptionHandleAction).Result;
+        return TryFallBack(fallbackValue, action, localExceptionHandleAction).Value;
     }
     #endregion
 }

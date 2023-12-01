@@ -1,14 +1,12 @@
 namespace TranQuiv.Lib.TryHandlers;
 
-public abstract class TryResult
+public abstract class TryResult(bool success = false)
 {
-    public bool IsSuccess { get; set; }
-    public TryResult() { }
-    public TryResult(bool isSuccess) { IsSuccess = isSuccess; }
+    public bool Success { get; } = success;
 
     public static implicit operator bool(TryResult tryResult)
     {
-        return tryResult.IsSuccess;
+        return tryResult.Success;
     }
 }
 
@@ -17,20 +15,9 @@ public abstract class TryResult
 /// </summary>
 /// <remarks>Can be used as <see cref="bool"/> with value from wether the try block execution successful or not</remarks>
 /// <typeparam name="T"></typeparam>
-public class TryResult<T> : TryResult
+public class TryResult<T>(bool success, T? value) : TryResult(success)
 {
-    public T? Result { get; set; }
-
-    public TryResult(bool isSuccess, T? result) : base(isSuccess)
-    {
-        Result = result;
-    }
-
-    internal void Deconstruct(out bool isSuccess, out T? result)
-    {
-        isSuccess = IsSuccess;
-        result = Result;
-    }
+    public T? Value { get; } = value;
 }
 
 /// <summary>
@@ -38,19 +25,8 @@ public class TryResult<T> : TryResult
 /// </summary>
 /// <remarks>Can be used as <see cref="bool"/> with value from wether the try block execution successful or not</remarks>
 /// <typeparam name="T"></typeparam>
-public class TryEnsuredResult<T> : TryResult
+public class TryEnsuredResult<T>(bool success, T value) : TryResult(success)
 {
-    public T Result { get; set; }
-
-    public TryEnsuredResult(bool isSuccess, T result) : base(isSuccess)
-    {
-        Result = result;
-    }
-
-    internal void Deconstruct(out bool isSuccess, out T result)
-    {
-        isSuccess = IsSuccess;
-        result = Result;
-    }
+    public T Value { get; } = value;
 }
 

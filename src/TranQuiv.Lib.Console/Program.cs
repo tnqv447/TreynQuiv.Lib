@@ -7,7 +7,7 @@ using Serilog;
 using Serilog.Events;
 using TranQuiv.Lib.Console;
 using TranQuiv.Lib.Crypto;
-using TranQuiv.Lib.Extensions;
+using TranQuiv.Lib.Common.Extensions;
 using TranQuiv.Lib.Json.Extensions;
 using TranQuiv.Lib.TryHandlers;
 
@@ -25,7 +25,7 @@ var handler = new TryHandler()
     ExceptionHandleAction = ex => Log.Error(ex, "error:")
 };
 handler.TryEnsure(() => new TestStruct() { Val = 12 });
-var result = handler.Try(() => new TestClass() { Val = 12 }).Result;
+var result = handler.Try(() => new TestClass() { Val = 12 }).Value;
 
 var name = result?.GetDisplayName(m => m.Val);
 var des = result?.GetDescription(m => m.Val);

@@ -5,17 +5,17 @@ namespace TranQuiv.Lib.NPOI;
 public interface IFontBuilder
 {
     /// <summary>
-    /// Builder compiles and return a <see cref="IFont"/>.
+    /// Compiles and returns a <see cref="IFont"/>.
     /// </summary>
     IFont Export();
 
     /// <summary>
-    /// Builder clone from another <see cref="IFont"/>.
+    /// Clones from another <see cref="IFont"/>.
     /// </summary>
     IFontBuilder Clone(IFont font);
 
     /// <summary>
-    /// Builder clone from another <see cref="IFontBuilder"/>.
+    /// Clones from another <see cref="IFontBuilder"/>.
     /// </summary>
     IFontBuilder Clone(IFontBuilder otherFontBuilder);
 

@@ -1,6 +1,6 @@
 namespace TranQuiv.Lib.Console;
 
-public enum TestEnum
+internal enum TestEnum
 {
     Red,
     Blue,

@@ -60,13 +60,13 @@ public class TryAsyncHandler
     public virtual async Task<TryEnsuredResult<T>> TryEnsureAsync<T>(Func<Task<T?>> funcTask, Func<Exception, Task>? localExceptionHandleTask = null) where T : new()
     {
         var result = await TryAsync(funcTask, localExceptionHandleTask);
-        return result.IsSuccess ? new(true, result.Result ?? new()) : new(false, new());
+        return result.Success ? new(true, result.Value ?? new()) : new(false, new());
     }
 
     public virtual async Task<TryEnsuredResult<T>> TryFallbackAsync<T>(T fallbackValue, Func<Task<T?>> funcTask, Func<Exception, Task>? localExceptionHandleTask = null)
     {
         var result = await TryAsync(funcTask, localExceptionHandleTask);
-        return result.IsSuccess ? new(true, result.Result ?? fallbackValue) : new(false, fallbackValue);
+        return result.Success ? new(true, result.Value ?? fallbackValue) : new(false, fallbackValue);
     }
 
     #region Non-Async
@@ -119,19 +119,19 @@ public class TryAsyncHandler
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual async Task<T?> TryInlineAsync<T>(Func<Task<T?>> funcTask, Func<Exception, Task>? localExceptionHandleTask = null)
     {
-        return (await TryAsync(funcTask, localExceptionHandleTask)).Result;
+        return (await TryAsync(funcTask, localExceptionHandleTask)).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual async Task<T> TryEnsureInlineAsync<T>(Func<Task<T?>> funcTask, Func<Exception, Task>? localExceptionHandleTask = null) where T : new()
     {
-        return (await TryEnsureAsync(funcTask, localExceptionHandleTask)).Result;
+        return (await TryEnsureAsync(funcTask, localExceptionHandleTask)).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual async Task<T> TryFallbackInlineAsync<T>(T fallbackValue, Func<Task<T?>> funcTask, Func<Exception, Task>? localExceptionHandleTask = null) where T : new()
     {
-        return (await TryFallbackAsync(fallbackValue, funcTask, localExceptionHandleTask)).Result;
+        return (await TryFallbackAsync(fallbackValue, funcTask, localExceptionHandleTask)).Value;
     }
     #endregion
 
@@ -146,19 +146,19 @@ public class TryAsyncHandler
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T? TryInline<T>(Func<T?> action, Func<Exception>? localExceptionHandleAction = null)
     {
-        return Try(action, localExceptionHandleAction).Result;
+        return Try(action, localExceptionHandleAction).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T TryEnsureInline<T>(Func<T?> action, Func<Exception>? localExceptionHandleAction = null) where T : new()
     {
-        return TryEnsure(action, localExceptionHandleAction).Result;
+        return TryEnsure(action, localExceptionHandleAction).Value;
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public virtual T TryFallbackInline<T>(T fallbackValue, Func<T?> function, Func<Exception>? localExceptionHandleAction = null)
     {
-        return TryFallback(fallbackValue, function, localExceptionHandleAction).Result;
+        return TryFallback(fallbackValue, function, localExceptionHandleAction).Value;
     }
     #endregion
 }

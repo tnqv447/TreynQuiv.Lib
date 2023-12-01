@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace TranQuiv.Lib.Components.Email;
+namespace TranQuiv.Lib.Common.Components;
 
 public abstract class TaskQueue
 {

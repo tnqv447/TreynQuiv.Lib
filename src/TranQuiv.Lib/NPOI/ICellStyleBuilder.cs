@@ -5,17 +5,17 @@ namespace TranQuiv.Lib.NPOI;
 public interface ICellStyleBuilder
 {
     /// <summary>
-    /// Builder compiles and return a <see cref="ICellStyle"/>.
+    /// Compiles and returns a <see cref="ICellStyle"/>.
     /// </summary>
     ICellStyle Export();
 
     /// <summary>
-    /// Builder clone from another <see cref="ICellStyle"/>.
+    /// Clones from another <see cref="ICellStyle"/>.
     /// </summary>
     ICellStyleBuilder Clone(ICellStyle otherStyle);
 
     /// <summary>
-    /// Builder clone from another <see cref="ICellStyleBuilder"/>.
+    /// Clones from another <see cref="ICellStyleBuilder"/>.
     /// </summary>
     ICellStyleBuilder Clone(ICellStyleBuilder otherStyleBuilder);
 

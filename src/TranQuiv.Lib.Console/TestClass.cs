@@ -1,4 +1,4 @@
-// See https://aka.ms/new-console-template for more information
+namespace TranQuiv.Lib.Console;
 
 internal class TestClass
 {

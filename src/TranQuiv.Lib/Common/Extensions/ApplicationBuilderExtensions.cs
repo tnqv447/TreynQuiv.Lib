@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace TranQuiv.Lib.Extensions;
+namespace TranQuiv.Lib.Common.Extensions;
 
 public static class ApplicationBuilderExtensions
 {

@@ -9,7 +9,7 @@ public static class JsonExtensions
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="writeIndented"></param>
-    /// <returns></returns>
+    /// <returns>A JSON string</returns>
     public static string ToJsonString(this object obj, bool writeIndented = false)
     {
         dynamic @this = Convert.ChangeType(obj, obj.GetType());
@@ -21,7 +21,7 @@ public static class JsonExtensions
     /// </summary>
     /// <param name="obj"></param>
     /// <param name="options"></param>
-    /// <returns></returns>
+    /// <returns>A JSON string</returns>
     public static string ToJsonString(this object obj, JsonSerializerOptions? options)
     {
         dynamic @this = Convert.ChangeType(obj, obj.GetType());
