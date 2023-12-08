@@ -37,7 +37,6 @@ Log.Information(val + " " + val.ToWords(new System.Globalization.CultureInfo("vi
 Log.Information(val + " " + val.ToWords());
 Log.Information(val.ToVietnameseNumberString() + " " + val.ToVietnameseNumberString(true));
 
-var text = "TreynQuiv";
 // handler.Try(() => throw new NotImplementedException());
 
 // var handlerAsync = new TryHandlerAsync()
