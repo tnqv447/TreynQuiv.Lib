@@ -1,4 +1,5 @@
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace TreynQuiv.Lib.Json.Extensions;
 
@@ -37,6 +38,7 @@ public static class JsonSerializerOptionsExtensions
     /// </summary>
     public static JsonSerializerOptions MakeReadonlyInline(this JsonSerializerOptions option)
     {
+        option.TypeInfoResolver = JsonSerializerOptions.Default.TypeInfoResolver;
         option.MakeReadOnly();
         return option;
     }

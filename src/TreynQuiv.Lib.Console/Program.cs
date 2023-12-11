@@ -10,6 +10,7 @@ using TreynQuiv.Lib.Crypto;
 using TreynQuiv.Lib.Common.Extensions;
 using TreynQuiv.Lib.Json.Extensions;
 using TreynQuiv.Lib.TryHandlers;
+using System.Linq.Expressions;
 
 const string LogTemplate = "[{Timestamp:dd/MM/yyyy HH:mm:ss}] [{Level:u3}] <{ThreadId}> [{SourceContext}] {Message:lj}{NewLine}{Exception}";
 Serilog.Log.Logger = new LoggerConfiguration()
@@ -36,6 +37,19 @@ long val = 3501;
 Log.Information(val + " " + val.ToWords(new System.Globalization.CultureInfo("vi-VN")));
 Log.Information(val + " " + val.ToWords());
 Log.Information(val.ToVietnameseNumberString() + " " + val.ToVietnameseNumberString(true));
+
+Expression<Func<TestClass, bool>> testExp = m => m.Val >= 100 && m.Val >= 150;
+Expression<Func<TestClass, bool>> testExp2 = m => m.Val >= 200;
+Expression<Func<TestClass, bool>> testExp3 = y => y.Val >= 200;
+
+var mergeExp = testExp.AndAlso(testExp2);
+
+Console.WriteLine(testExp);
+Console.WriteLine(testExp2);
+Console.WriteLine(mergeExp);
+Console.WriteLine(testExp.AndAlso(testExp3));
+Console.WriteLine(testExp.OrElse(testExp3));
+Console.WriteLine(Expression.Lambda<Func<TestClass, bool>>(Expression.AndAlso(testExp, testExp2), Expression.Parameter(typeof(int), "k")));
 
 // handler.Try(() => throw new NotImplementedException());
 

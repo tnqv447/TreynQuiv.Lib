@@ -12,8 +12,8 @@ namespace TreynQuiv.Lib.Crypto;
 public class RsaCrypto
 {
     private readonly X509Certificate2 _cert;
-    public RSAEncryptionPadding EncryptionOaepPadding { get; set; } = RSAEncryptionPadding.OaepSHA256;
-    public HashAlgorithmName HashAlgorithmName { get; set; } = HashAlgorithmName.SHA256;
+    public RSAEncryptionPadding EncryptionOaepPadding { get; init; } = RSAEncryptionPadding.OaepSHA256;
+    public HashAlgorithmName HashAlgorithmName { get; init; } = HashAlgorithmName.SHA256;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="RsaCrypto"/> class using a certificate file name and a password used to access the certificate.
