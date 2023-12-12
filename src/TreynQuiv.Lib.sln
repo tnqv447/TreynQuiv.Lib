@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreynQuiv.Lib.Console", "Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreynQuiv.Lib.Database", "TreynQuiv.Lib.Database\TreynQuiv.Lib.Database.csproj", "{E1C72F30-B372-49F9-9E4C-D08FB48FF4CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreynQuiv.Lib.Cryptography", "TreynQuiv.Lib.Cryptography\TreynQuiv.Lib.Cryptography.csproj", "{07CA3961-CDC3-476D-A145-A88D79F152E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{E1C72F30-B372-49F9-9E4C-D08FB48FF4CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1C72F30-B372-49F9-9E4C-D08FB48FF4CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1C72F30-B372-49F9-9E4C-D08FB48FF4CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{07CA3961-CDC3-476D-A145-A88D79F152E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07CA3961-CDC3-476D-A145-A88D79F152E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07CA3961-CDC3-476D-A145-A88D79F152E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07CA3961-CDC3-476D-A145-A88D79F152E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

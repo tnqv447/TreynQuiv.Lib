@@ -2,6 +2,9 @@ using NPOI.SS.UserModel;
 
 namespace TreynQuiv.Lib.NPOI.Components;
 
+/// <summary>
+/// Built-in implementation of <see cref="IFontBuilder"/>.
+/// </summary>
 internal class FontBuilder : IFontBuilder
 {
     private readonly IWorkbook _wb;
@@ -14,83 +17,82 @@ internal class FontBuilder : IFontBuilder
         _font.FontHeightInPoints = 12;
     }
 
-    public virtual IFont Export()
+    public IFont Export()
     {
         var exportFont = _wb.CreateFont();
         exportFont.CloneStyleFrom(_font);
         return exportFont;
     }
 
-    public virtual IFontBuilder Clone(IFont font)
+    public IFontBuilder Clone(IFont font)
     {
         _font.CloneStyleFrom(font);
         return this;
     }
 
-    public virtual IFontBuilder Clone(IFontBuilder otherFontBuilder)
+    public IFontBuilder Clone(IFontBuilder otherFontBuilder)
     {
         _font.CloneStyleFrom(otherFontBuilder.Export());
         return this;
     }
 
-    public virtual IFontBuilder FontName(string fontName)
+    public IFontBuilder FontName(string fontName)
     {
         _font.FontName = fontName;
         return this;
     }
 
-    public virtual IFontBuilder Bold(bool enable = true)
+    public IFontBuilder Bold(bool enable = true)
     {
         _font.IsBold = enable;
         return this;
     }
 
-    public virtual IFontBuilder Italic(bool enable = true)
+    public IFontBuilder Italic(bool enable = true)
     {
         _font.IsItalic = enable;
         return this;
     }
 
-    public virtual IFontBuilder Strikeout(bool enable = true)
+    public IFontBuilder Strikeout(bool enable = true)
     {
         _font.IsStrikeout = enable;
         return this;
     }
 
-    public virtual IFontBuilder Color(IColor color)
+    public IFontBuilder Color(IColor color)
     {
         _font.Color = color.Indexed;
         return this;
     }
 
-    public virtual IFontBuilder Color(IndexedColors color)
+    public IFontBuilder Color(IndexedColors color)
     {
         _font.Color = color.Index;
         return this;
     }
 
-    public virtual IFontBuilder Color(short color)
+    public IFontBuilder Color(short color)
     {
         _font.Color = color;
         return this;
     }
 
-    public virtual IFontBuilder HeightInPoints(short value)
+    public IFontBuilder HeightInPoints(short value)
     {
         _font.FontHeightInPoints = value;
         return this;
     }
 
-    public virtual IFontBuilder Underline(FontUnderlineType underlineType)
+    public IFontBuilder Underline(FontUnderlineType underlineType)
     {
         _font.Underline = underlineType;
         return this;
     }
 
-    public virtual IFontBuilder TypeOffset(FontSuperScript fontSuperScript)
+    public IFontBuilder TypeOffset(FontSuperScript fontSuperScript)
     {
         _font.TypeOffset = fontSuperScript;
         return this;
     }
 }
-

@@ -2,6 +2,9 @@ using NPOI.SS.UserModel;
 
 namespace TreynQuiv.Lib.NPOI;
 
+/// <summary>
+/// Base interface for configuring common properties of <see cref="IFont"/>.
+/// </summary>
 public interface IFontBuilder
 {
     /// <summary>

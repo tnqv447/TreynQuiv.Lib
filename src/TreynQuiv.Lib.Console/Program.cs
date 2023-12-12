@@ -1,12 +1,10 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
 using System.ComponentModel;
-using System.Reflection;
 using Humanizer;
 using Serilog;
 using Serilog.Events;
 using TreynQuiv.Lib.Console;
-using TreynQuiv.Lib.Crypto;
 using TreynQuiv.Lib.Common.Extensions;
 using TreynQuiv.Lib.Json.Extensions;
 using TreynQuiv.Lib.TryHandlers;
@@ -49,7 +47,7 @@ Console.WriteLine(testExp2);
 Console.WriteLine(mergeExp);
 Console.WriteLine(testExp.AndAlso(testExp3));
 Console.WriteLine(testExp.OrElse(testExp3));
-Console.WriteLine(Expression.Lambda<Func<TestClass, bool>>(Expression.AndAlso(testExp, testExp2), Expression.Parameter(typeof(int), "k")));
+// Console.WriteLine(Expression.Lambda<Func<TestClass, bool>>(Expression.AndAlso(testExp, testExp2), Expression.Parameter(typeof(int), "k")));
 
 // handler.Try(() => throw new NotImplementedException());
 

@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
-namespace TreynQuiv.Lib.Crypto;
+namespace TreynQuiv.Lib.Cryptography;
 
 /// <summary>
 /// A wrapper around <see cref="Aes"/> for the ease of use.

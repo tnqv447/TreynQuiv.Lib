@@ -65,7 +65,6 @@ public class TryHandler
             BeforeAction?.Invoke();
             var result = action.Invoke();
             AfterAction?.Invoke();
-
             return new(true, result);
         }
         catch (Exception ex)
