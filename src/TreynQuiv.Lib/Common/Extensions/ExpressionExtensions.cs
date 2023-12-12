@@ -1,18 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Threading.Tasks;
 
 namespace TreynQuiv.Lib.Common.Extensions;
 
 public static class ExpressionExtensions
 {
     /// <summary>
-    /// Creates a <see cref="Expression{Func{T, bool}}"/> that represents a conditional <see langword="AND"/> operation that evaluates the second operand only if the first operand evaluates to <see langword="true"/>.
+    /// Creates a <see cref="Expression{}"/> from <see cref="BinaryExpression"/> that represents a conditional <see langword="AND"/> operation that evaluates the second operand only if the first operand evaluates to <see langword="true"/>.
     /// </summary>
     /// <returns>
-    /// A <see cref="Expression{Func{T, bool}}"/> that has the <see cref="Expression.NodeType"/> property equal to <see cref="ExpressionType.AndAlso"/> and the <see cref="BinaryExpression.Left"/> and <see cref="BinaryExpression.Right"/> properties set to the specified values.
+    /// A <see cref="Expression{}"/> that has the <see cref="Expression.NodeType"/> property equal to <see cref="ExpressionType.AndAlso"/> and the <see cref="BinaryExpression.Left"/> and <see cref="BinaryExpression.Right"/> properties set to the specified values.
     /// </returns>
     public static Expression<Func<T, bool>> AndAlso<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
     {
@@ -28,10 +24,10 @@ public static class ExpressionExtensions
     }
 
     /// <summary>
-    /// Creates a <see cref="Expression{Func{T, bool}}"/> that represents a conditional <see langword="OR"/> operation that evaluates the second operand only if the first operand evaluates to <see langword="false"/>.
+    /// Creates a <see cref="Expression{}"/> from <see cref="BinaryExpression"/> that represents a conditional <see langword="OR"/> operation that evaluates the second operand only if the first operand evaluates to <see langword="false"/>.
     /// </summary>
     /// <returns>
-    /// A <see cref="Expression{Func{T, bool}}"/> that has the <see cref="Expression.NodeType"/> property equal to <see cref="ExpressionType.OrElse"/> and the <see cref="BinaryExpression.Left"/> and <see cref="BinaryExpression.Right"/> properties set to the specified values.
+    /// A <see cref="Expression{}"/> that has the <see cref="Expression.NodeType"/> property equal to <see cref="ExpressionType.OrElse"/> and the <see cref="BinaryExpression.Left"/> and <see cref="BinaryExpression.Right"/> properties set to the specified values.
     /// </returns>
     public static Expression<Func<T, bool>> OrElse<T>(this Expression<Func<T, bool>> left, Expression<Func<T, bool>> right)
     {

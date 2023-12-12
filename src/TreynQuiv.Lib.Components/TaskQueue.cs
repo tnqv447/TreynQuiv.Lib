@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace TreynQuiv.Lib.Common.Components;
+namespace TreynQuiv.Lib.Components;
 
 public abstract class TaskQueue
 {

@@ -3,6 +3,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TreynQuiv.Lib\TreynQuiv.Lib.csproj" />
     <ProjectReference Include="..\TreynQuiv.Lib.NPOI\TreynQuiv.Lib.NPOI.csproj" />
+    <ProjectReference Include="..\TreynQuiv.Lib.Database\TreynQuiv.Lib.Database.csproj" />
+    <ProjectReference Include="..\TreynQuiv.Lib.Components\TreynQuiv.Lib.Components.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

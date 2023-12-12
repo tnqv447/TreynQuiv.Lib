@@ -24,6 +24,16 @@ public abstract class EFCoreAsyncRepository<TEntity>(DbContext context)
         return (await Query(predicates).ToListAsync()).AsReadOnly();
     }
 
+    public virtual async Task<int> CountAsync(params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        return await Query(predicates).CountAsync();
+    }
+
+    public virtual async Task<long> LongCountAsync(params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        return await Query(predicates).LongCountAsync();
+    }
+
     public async Task<TEntity> AddAsync(TEntity entity)
     {
         await _dbSet.AddAsync(entity);
@@ -41,35 +51,5 @@ public abstract class EFCoreAsyncRepository<TEntity>(DbContext context)
     {
         _dbSet.Remove(entity);
         await Task.CompletedTask;
-    }
-
-    public TEntity First(params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TEntity? FirstOrDefault(params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        throw new NotImplementedException();
-    }
-
-    public IReadOnlyList<TEntity> List(params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TEntity Add(TEntity entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TEntity Update(TEntity entity)
-    {
-        throw new NotImplementedException();
-    }
-
-    public void Remove(TEntity entity)
-    {
-        throw new NotImplementedException();
     }
 }

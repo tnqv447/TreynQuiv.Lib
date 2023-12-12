@@ -17,15 +17,8 @@ public static class AttributeAccessorExtensions
     /// <returns>The display name, property name if <see cref="DisplayNameAttribute"/> not found or <c>null</c> if property not found.</returns>
     public static string? GetDisplayName<T, TProperty>(this T model, Expression<Func<T, TProperty>> expression)
     {
-        MemberExpression memberExpression = (MemberExpression)expression.Body;
-        string? propertyName = (memberExpression.Member is PropertyInfo propertyInfo) ? propertyInfo.Name : null;
-        if (string.IsNullOrEmpty(propertyName))
-        {
-            return null;
-        }
-
-        return model?.GetType().GetMember(propertyName).FirstOrDefault()
-            ?.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? propertyName;
+        var memberInfo = model.GetMemberInfo(expression);
+        return memberInfo.GetCustomAttribute<DisplayNameAttribute>()?.DisplayName ?? memberInfo.Name;
     }
 
     /// <summary>
@@ -39,15 +32,8 @@ public static class AttributeAccessorExtensions
     /// <returns>The description, property name if <see cref="DescriptionAttribute"/> not found or <see ref="null"/> if property not found.</returns>
     public static string? GetDescription<T, TProperty>(this T model, Expression<Func<T, TProperty>> expression)
     {
-        MemberExpression memberExpression = (MemberExpression)expression.Body;
-        string? propertyName = (memberExpression.Member is PropertyInfo propertyInfo) ? propertyInfo.Name : null;
-        if (string.IsNullOrEmpty(propertyName))
-        {
-            return null;
-        }
-
-        return model?.GetType().GetMember(propertyName).FirstOrDefault()
-            ?.GetCustomAttribute<DescriptionAttribute>()?.Description ?? propertyName;
+        var memberInfo = model.GetMemberInfo(expression);
+        return memberInfo.GetCustomAttribute<DescriptionAttribute>()?.Description ?? memberInfo.Name;
     }
 
     /// <summary>
@@ -58,36 +44,23 @@ public static class AttributeAccessorExtensions
     /// <typeparam name="T"></typeparam>
     /// <typeparam name="TProperty"></typeparam>
     /// <returns>The <see cref="MemberInfo"/> or <c>null</c> if not found property</returns>
-    public static MemberInfo? GetMemberInfo<T, TProperty>(this T model, Expression<Func<T, TProperty>> expression)
+    public static MemberInfo GetMemberInfo<T, TProperty>(this T model, Expression<Func<T, TProperty>> expression)
     {
-        MemberExpression memberExpression = (MemberExpression)expression.Body;
-        string? propertyName = (memberExpression.Member is PropertyInfo propertyInfo) ? propertyInfo.Name : null;
-        if (string.IsNullOrEmpty(propertyName))
+        if (expression.Body is not MemberExpression memberExpression)
         {
-            return null;
+            throw new ArgumentException($"The {nameof(expression)} is not a {nameof(MemberExpression)}");
         }
 
-        return model?.GetType().GetMember(propertyName).FirstOrDefault();
+        return memberExpression.Member;
     }
 
     /// <summary>
-    /// Get <typeparamref name="TAttribute"/> of this <see cref="MemberInfo"/>.
+    /// Retrieves a read-only collection of <typeparamref name="TAttribute"/> of a specified type that are applied to a specified member..
     /// </summary>
     /// <param name="memberInfo"></param>
     /// <typeparam name="TAttribute"></typeparam>
-    /// <returns>The <typeparamref name="TAttribute"/> or <c>null</c> if not found</returns>
-    public static TAttribute? GetAttribute<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
-    {
-        return memberInfo.GetCustomAttribute<TAttribute>();
-    }
-
-    /// <summary>
-    /// Get a list of <typeparamref name="TAttribute"/> of this <see cref="MemberInfo"/>.
-    /// </summary>
-    /// <param name="memberInfo"></param>
-    /// <typeparam name="TAttribute"></typeparam>
-    /// <returns>A list of <typeparamref name="TAttribute"/>. Empty if not found</returns>
-    public static IReadOnlyList<TAttribute> GetAttributes<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
+    /// <returns>A read-only collection of the custom attributes that are applied to <see langword="element"/> and that match <typeparamref name="TAttribute"/>, or an empty collection if no such attributes exist.</returns>
+    public static IReadOnlyList<TAttribute> GetCustomAttributeList<TAttribute>(this MemberInfo memberInfo) where TAttribute : Attribute
     {
         return memberInfo.GetCustomAttributes<TAttribute>().ToList().AsReadOnly();
     }

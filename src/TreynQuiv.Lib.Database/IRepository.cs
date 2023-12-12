@@ -27,6 +27,18 @@ public interface IRepository<TEntity> where TEntity : IEntity
     IReadOnlyList<TEntity> List(params Expression<Func<TEntity, bool>>[] predicates);
 
     /// <summary>
+    /// Counts the found <typeparamref name="TEntity"/> after querying the collection.
+    /// </summary>
+    /// <returns>Count value as <see cref="int"/>.</returns>
+    int Count(params Expression<Func<TEntity, bool>>[] predicates);
+
+    /// <summary>
+    /// Counts the found <typeparamref name="TEntity"/> after querying the collection.
+    /// </summary>
+    /// <returns>Count value as <see cref="long"/>.</returns>
+    long LongCount(params Expression<Func<TEntity, bool>>[] predicates);
+
+    /// <summary>
     /// Add an <typeparamref name="TEntity"/> to the collection.
     /// </summary>
     /// <returns>The passed <paramref name="entity"/>.</returns>
