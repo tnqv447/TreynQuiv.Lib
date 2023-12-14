@@ -7,8 +7,12 @@ namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 /// An abstract implementation of <see cref="IAsyncRepository{}"/> using <see cref="DbContext"/>.
 /// </summary>
 public abstract class EFCoreAsyncRepository<TEntity>(DbContext context)
-    : BaseEFCoreRepository<TEntity>(context), IAsyncRepository<TEntity> where TEntity : class, IEntity
+    : BaseEFCoreRepository<TEntity>(context), IEFCoreAsyncRepository<TEntity> where TEntity : class, IEntity
 {
+    public virtual async Task<IReadOnlyList<TEntity>> GetAllAsync()
+    {
+        return (await _dbSet.ToListAsync()).AsReadOnly();
+    }
     public virtual async Task<TEntity> FirstAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
         return await Query(predicates).FirstAsync();
@@ -22,6 +26,21 @@ public abstract class EFCoreAsyncRepository<TEntity>(DbContext context)
     public virtual async Task<IReadOnlyList<TEntity>> ListAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
         return (await Query(predicates).ToListAsync()).AsReadOnly();
+    }
+
+    public virtual async Task<IReadOnlyList<TEntity>> ListAsync(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
+                                               params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        var query = Query(predicates);
+        foreach (var include in includes)
+        {
+            if (include.Body is MemberExpression)
+            {
+                query = query.Include(include);
+            }
+        }
+
+        return (await query.ToListAsync()).AsReadOnly();
     }
 
     public virtual async Task<int> CountAsync(params Expression<Func<TEntity, bool>>[] predicates)

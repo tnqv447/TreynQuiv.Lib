@@ -8,7 +8,7 @@ namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 /// An abstract implementation of <see cref="IRepository{}"/> using <see cref="DbContext"/>.
 /// </summary>
 public abstract class EFCoreRepository<TEntity>(DbContext context)
-    : BaseEFCoreRepository<TEntity>(context), IRepository<TEntity> where TEntity : class, IEntity
+    : BaseEFCoreRepository<TEntity>(context), IEFCoreRepository<TEntity> where TEntity : class, IEntity
 {
     public virtual TEntity First(params Expression<Func<TEntity, bool>>[] predicates)
     {
@@ -24,33 +24,10 @@ public abstract class EFCoreRepository<TEntity>(DbContext context)
     {
         return Query(predicates).ToList().AsReadOnly();
     }
-
-    public virtual int Count(params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        return Query(predicates).Count();
-    }
-
-    public virtual long LongCount(params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        return Query(predicates).LongCount();
-    }
-
-    public virtual IReadOnlyList<TEntity> List(IEnumerable<OrderPredicate<TEntity>> orders,
-                                               IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
+    public virtual IReadOnlyList<TEntity> List(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
                                                params Expression<Func<TEntity, bool>>[] predicates)
     {
         var query = Query(predicates);
-
-        IOrderedEnumerable<TEntity>? orderedQuery = null;
-
-        foreach (var order in orders)
-        {
-            orderedQuery = orderedQuery is null
-                ? order.Descending ? query.OrderByDescending(order.MemberSelector) : query.OrderBy(order.MemberSelector)
-                : order.Descending ? orderedQuery.ThenByDescending(order.MemberSelector) : orderedQuery.ThenBy(order.MemberSelector);
-        }
-
-        query = orderedQuery?.AsQueryable() ?? query;
         foreach (var include in includes)
         {
             if (include.Body is MemberExpression)
@@ -60,6 +37,16 @@ public abstract class EFCoreRepository<TEntity>(DbContext context)
         }
 
         return query.ToList().AsReadOnly();
+    }
+
+    public virtual int Count(params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        return Query(predicates).Count();
+    }
+
+    public virtual long LongCount(params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        return Query(predicates).LongCount();
     }
 
     public TEntity Add(TEntity entity)

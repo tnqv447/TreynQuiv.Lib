@@ -9,7 +9,7 @@ public abstract class BaseEFCoreRepository<TEntity>(DbContext context) where TEn
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
     /// <summary>
-    /// Returns a <see cref="IQueryable"/> that has compiled all <paramref name="predicates"/>.
+    /// Returns a <see cref="IQueryable"/> filtered through all <paramref name="predicates"/>.
     /// </summary>
     protected IQueryable<TEntity> Query(params Expression<Func<TEntity, bool>>[] predicates)
     {
