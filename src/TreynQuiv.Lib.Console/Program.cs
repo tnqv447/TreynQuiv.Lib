@@ -22,9 +22,11 @@ Serilog.Log.Logger = new LoggerConfiguration()
       .WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Verbose, outputTemplate: LogTemplate)
       .CreateLogger();
 
+var pagingOptions = new PagingOptions(100, 10);
+Console.WriteLine(pagingOptions.ToJsonString());
 // testTryHandlers();
 // testMemberExpression();
-testMergeExpression();
+// testMergeExpression();
 // testHumanizer();
 
 static void testMemberExpression()

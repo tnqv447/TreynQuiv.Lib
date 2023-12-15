@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using TreynQuiv.Lib.Components;
 
 namespace TreynQuiv.Lib.Database;
 
@@ -25,6 +26,12 @@ public interface IRepository<TEntity> where TEntity : IEntity
     /// </summary>
     /// <returns>An <see cref="IReadOnlyList{TEntity}"/>.</returns>
     IReadOnlyList<TEntity> List(params Expression<Func<TEntity, bool>>[] predicates);
+
+    /// <summary>
+    /// Return a <see cref="IReadOnlyList{TEntity}"/> after querying the collection and then applying <see cref="PagingOptions"/>.
+    /// </summary>
+    /// <returns>A paginated <see cref="IReadOnlyList{TEntity}"/>.</returns>
+    IReadOnlyList<TEntity> List(PagingOptions pagingOptions, out long totalRecords, out long totalPages, params Expression<Func<TEntity, bool>>[] predicates);
 
     /// <summary>
     /// Counts the found <typeparamref name="TEntity"/> after querying the collection.

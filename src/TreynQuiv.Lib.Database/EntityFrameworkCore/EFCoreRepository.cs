@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using TreynQuiv.Lib.Database.Components;
+using TreynQuiv.Lib.Components;
 
 namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 
@@ -24,6 +24,7 @@ public abstract class EFCoreRepository<TEntity>(DbContext context)
     {
         return Query(predicates).ToList().AsReadOnly();
     }
+
     public virtual IReadOnlyList<TEntity> List(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
                                                params Expression<Func<TEntity, bool>>[] predicates)
     {
@@ -35,6 +36,20 @@ public abstract class EFCoreRepository<TEntity>(DbContext context)
                 query = query.Include(include);
             }
         }
+
+        return query.ToList().AsReadOnly();
+    }
+
+    public virtual IReadOnlyList<TEntity> List(PagingOptions pagingOptions, out long totalRecords, out long totalPages, params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        var query = Query(predicates);
+
+        totalRecords = query.LongCount();
+        totalPages = Math.DivRem(totalRecords, pagingOptions.PageSize, out var rem);
+        totalPages += (rem > 0 ? 1 : 0);
+
+        query.Skip(pagingOptions.PageSize * pagingOptions.FromPage)
+            .Take(pagingOptions.PageSize * pagingOptions.PageRangeSize);
 
         return query.ToList().AsReadOnly();
     }
