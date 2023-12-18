@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using TreynQuiv.Lib.Components;
 
 namespace TreynQuiv.Lib.Database;
 
@@ -25,6 +26,12 @@ public interface IAsyncRepository<TEntity> where TEntity : IEntity
     /// </summary>
     /// <returns>An <see cref="IReadOnlyList{TEntity}"/>.</returns>
     Task<IReadOnlyList<TEntity>> ListAsync(params Expression<Func<TEntity, bool>>[] predicates);
+
+    /// <summary>
+    /// Return a <see cref="IReadOnlyList{TEntity}"/> after querying the collection and then applying <see cref="PagingOptions"/>.
+    /// </summary>
+    /// <returns>A paginated <see cref="IReadOnlyList{TEntity}"/>, total records count and total pages count.</returns>
+    Task<(IReadOnlyList<TEntity> records, long totalRecords, long totalPages)> ListAsync(PagingOptions pagingOptions, params Expression<Func<TEntity, bool>>[] predicates);
 
     /// <summary>
     /// Counts the found <typeparamref name="TEntity"/> after querying the collection.

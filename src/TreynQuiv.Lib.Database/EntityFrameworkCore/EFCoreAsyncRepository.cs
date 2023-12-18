@@ -1,5 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using TreynQuiv.Lib.Components;
 
 namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 
@@ -15,42 +16,35 @@ public abstract class EFCoreAsyncRepository<TEntity>(DbContext context)
     }
     public virtual async Task<TEntity> FirstAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return await Query(predicates).FirstAsync();
+        return await InQuery(predicates).FirstAsync();
     }
 
     public virtual async Task<TEntity?> FirstOrDefaultAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return await Query(predicates).FirstOrDefaultAsync();
+        return await InQuery(predicates).FirstOrDefaultAsync();
     }
 
     public virtual async Task<IReadOnlyList<TEntity>> ListAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return (await Query(predicates).ToListAsync()).AsReadOnly();
+        return (await InQuery(predicates).ToListAsync()).AsReadOnly();
     }
 
-    public virtual async Task<IReadOnlyList<TEntity>> ListAsync(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
-                                               params Expression<Func<TEntity, bool>>[] predicates)
+    public virtual async Task<(IReadOnlyList<TEntity> records, long totalRecords, long totalPages)> ListAsync(PagingOptions pagingOptions, params Expression<Func<TEntity, bool>>[] predicates)
     {
-        var query = Query(predicates);
-        foreach (var include in includes)
-        {
-            if (include.Body is MemberExpression)
-            {
-                query = query.Include(include);
-            }
-        }
-
-        return (await query.ToListAsync()).AsReadOnly();
+        var records = await InQuery(predicates)
+            .Paging(pagingOptions, out var totalRecords, out var totalPages)
+            .ToListAsync();
+        return (records.AsReadOnly(), totalRecords, totalPages);
     }
 
     public virtual async Task<int> CountAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return await Query(predicates).CountAsync();
+        return await InQuery(predicates).CountAsync();
     }
 
     public virtual async Task<long> LongCountAsync(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return await Query(predicates).LongCountAsync();
+        return await InQuery(predicates).LongCountAsync();
     }
 
     public async Task<TEntity> AddAsync(TEntity entity)

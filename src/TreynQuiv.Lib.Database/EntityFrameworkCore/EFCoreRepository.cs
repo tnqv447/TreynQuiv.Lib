@@ -12,56 +12,34 @@ public abstract class EFCoreRepository<TEntity>(DbContext context)
 {
     public virtual TEntity First(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return Query(predicates).First();
+        return InQuery(predicates).First();
     }
 
     public virtual TEntity? FirstOrDefault(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return Query(predicates).FirstOrDefault();
+        return InQuery(predicates).FirstOrDefault();
     }
 
     public virtual IReadOnlyList<TEntity> List(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return Query(predicates).ToList().AsReadOnly();
-    }
-
-    public virtual IReadOnlyList<TEntity> List(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
-                                               params Expression<Func<TEntity, bool>>[] predicates)
-    {
-        var query = Query(predicates);
-        foreach (var include in includes)
-        {
-            if (include.Body is MemberExpression)
-            {
-                query = query.Include(include);
-            }
-        }
-
-        return query.ToList().AsReadOnly();
+        return InQuery(predicates).ToList().AsReadOnly();
     }
 
     public virtual IReadOnlyList<TEntity> List(PagingOptions pagingOptions, out long totalRecords, out long totalPages, params Expression<Func<TEntity, bool>>[] predicates)
     {
-        var query = Query(predicates);
-
-        totalRecords = query.LongCount();
-        totalPages = Math.DivRem(totalRecords, pagingOptions.PageSize, out var rem);
-        totalPages += (rem > 0 ? 1 : 0);
-
-        query.Skip(pagingOptions.PageSize * pagingOptions.FromPage)
-            .Take(pagingOptions.PageSize * pagingOptions.PageRangeSize);
-
-        return query.ToList().AsReadOnly();
+        return InQuery(predicates)
+            .Paging(pagingOptions, out totalRecords, out totalPages)
+            .ToList().AsReadOnly();
     }
 
     public virtual int Count(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return Query(predicates).Count();
+        return InQuery(predicates).Count();
     }
 
     public virtual long LongCount(params Expression<Func<TEntity, bool>>[] predicates)
     {
-        return Query(predicates).LongCount();
+        return InQuery(predicates).LongCount();
     }
 
     public TEntity Add(TEntity entity)

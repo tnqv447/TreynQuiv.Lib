@@ -9,9 +9,11 @@ public abstract class BaseEFCoreRepository<TEntity>(DbContext context) where TEn
     protected readonly DbSet<TEntity> _dbSet = context.Set<TEntity>();
 
     /// <summary>
-    /// Returns a <see cref="IQueryable"/> filtered through all <paramref name="predicates"/>.
+    /// Query database through all <paramref name="predicates"/>.
     /// </summary>
-    protected IQueryable<TEntity> Query(params Expression<Func<TEntity, bool>>[] predicates)
+    /// <param name="predicates"></param>
+    /// <returns>A <see cref="IQueryable{}"/>.</returns>
+    protected IQueryable<TEntity> InQuery(params Expression<Func<TEntity, bool>>[] predicates)
     {
         var query = _dbSet.AsQueryable();
         foreach (var predicate in predicates)
@@ -20,5 +22,15 @@ public abstract class BaseEFCoreRepository<TEntity>(DbContext context) where TEn
         }
 
         return query;
+    }
+
+    /// <summary>
+    /// Query database through all <paramref name="predicates"/>.
+    /// </summary>
+    /// <param name="predicates"></param>
+    /// <returns>A <see cref="EFCoreQuery{}"/>.</returns>
+    public EFCoreQuery<TEntity> Query(params Expression<Func<TEntity, bool>>[] predicates)
+    {
+        return new(InQuery(predicates));
     }
 }

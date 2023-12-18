@@ -8,6 +8,17 @@ namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 /// </summary>
 public interface IEFCoreUnitOfWork : IUnitOfWork, IDisposable
 {
+    /// <summary>
+    /// Start a new transaction.
+    /// <para>See Transactions in EF Core for more information and examples.</para>
+    /// </summary>
+    /// <returns>The started <see cref="IDbContextTransaction"/></returns>
     IDbContextTransaction BeginTransaction();
+
+    /// <summary>
+    /// Start a new transaction.
+    /// <para>See Transactions in EF Core for more information and examples.</para>
+    /// </summary>
+    /// <returns>The started <see cref="IDbContextTransaction"/></returns>
     Task<IDbContextTransaction> BeginTransactionAsync();
 }

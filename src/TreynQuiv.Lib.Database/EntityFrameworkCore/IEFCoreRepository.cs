@@ -6,13 +6,12 @@ namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 /// Extends <see cref="IRepository{}"/> with <see langword="EFCore"/>.
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IEFCoreRepository<TEntity> : IRepository<TEntity> where TEntity : IEntity
+public interface IEFCoreRepository<TEntity> : IRepository<TEntity> where TEntity : class, IEntity
 {
     /// <summary>
-    /// Return a <see cref="IReadOnlyList{TEntity}"/> found after querying the collection
-    /// that also querying navigation properties.
+    /// Query database through all <paramref name="predicates"/>.
     /// </summary>
-    /// <returns>An <see cref="IReadOnlyList{TEntity}"/>.</returns>
-    IReadOnlyList<TEntity> List(IEnumerable<Expression<Func<TEntity, dynamic>>> includes,
-                                params Expression<Func<TEntity, bool>>[] predicates);
+    /// <param name="predicates"></param>
+    /// <returns>A <see cref="EFCoreQuery{}"/>.</returns>
+    EFCoreQuery<TEntity> Query(params Expression<Func<TEntity, bool>>[] predicates);
 }

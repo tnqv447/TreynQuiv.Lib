@@ -8,7 +8,7 @@ namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
 /// </summary>
 public abstract class EFCoreUnitOfWork(DbContext context) : IEFCoreUnitOfWork, IDisposable
 {
-    private readonly DbContext _context = context;
+    protected readonly DbContext _context = context;
     private bool _disposedValue;
 
     public IDbContextTransaction BeginTransaction()
@@ -39,6 +39,7 @@ public abstract class EFCoreUnitOfWork(DbContext context) : IEFCoreUnitOfWork, I
             {
                 _context.Dispose();
             }
+
             _disposedValue = true;
         }
     }
