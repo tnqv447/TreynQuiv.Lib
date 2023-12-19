@@ -1,6 +1,6 @@
 using TreynQuiv.Lib.Components;
 
-namespace TreynQuiv.Lib.Database.EntityFrameworkCore;
+namespace TreynQuiv.Lib.Database.EntityFrameworkCore.Extensions;
 
 internal static class IQueryableExtensions
 {

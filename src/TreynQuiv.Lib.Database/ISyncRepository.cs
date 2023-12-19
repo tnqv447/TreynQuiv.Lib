@@ -7,7 +7,7 @@ namespace TreynQuiv.Lib.Database;
 /// A base generic repository interface.
 /// </summary>
 /// <typeparam name="TEntity"></typeparam>
-public interface IRepository<TEntity> where TEntity : IEntity
+public interface ISyncRepository<TEntity> where TEntity : IEntity
 {
     /// <summary>
     /// Return the first <typeparamref name="TEntity"/> found after querying the collection.
