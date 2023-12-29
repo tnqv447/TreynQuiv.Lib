@@ -2,9 +2,17 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace TreynQuiv.Lib.Components;
 
+/// <summary>
+/// Object for settings pagination options.
+/// </summary>
 public class PagingOptions
 {
     private int _pageSize;
+
+    /// <summary>
+    /// Number of elements per page.
+    /// </summary>
+    /// <value></value>
     public required int PageSize
     {
         get => _pageSize;
@@ -20,6 +28,11 @@ public class PagingOptions
     }
 
     private int _fromPage;
+
+    /// <summary>
+    /// Start page index of <see cref="PageRange"/> using 0-based indices.
+    /// </summary>
+    /// <value></value>
     public required int FromPage
     {
         get => _fromPage;
@@ -35,6 +48,11 @@ public class PagingOptions
     }
 
     private int _toPage;
+
+    /// <summary>
+    /// Last page index of <see cref="PageRange"/> using 0-based indices.
+    /// </summary>
+    /// <value></value>
     public required int ToPage
     {
         get => _toPage;
@@ -48,7 +66,12 @@ public class PagingOptions
             _toPage = value;
         }
     }
-    public int PageRangeSize
+
+    /// <summary>
+    /// Get the range of <see cref="FromPage"/> to <see cref="ToPage"/>
+    /// </summary>
+    /// <value></value>
+    public int PageRange
     {
         get => ToPage - FromPage;
     }

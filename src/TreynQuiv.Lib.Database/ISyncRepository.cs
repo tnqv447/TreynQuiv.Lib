@@ -60,5 +60,5 @@ public interface ISyncRepository<TEntity> where TEntity : IEntity
     /// <summary>
     /// Remove an <typeparamref name="TEntity"/> from the collection.
     /// </summary>
-    void Remove(TEntity entity);
+    void Delete(TEntity entity);
 }

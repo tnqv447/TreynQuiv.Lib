@@ -7,7 +7,7 @@ internal static class IQueryableExtensions
     public static IQueryable<T> Paging<T>(this IQueryable<T> query, PagingOptions pagingOptions)
     {
         return query.Skip(pagingOptions.PageSize * pagingOptions.FromPage)
-            .Take(pagingOptions.PageSize * pagingOptions.PageRangeSize);
+            .Take(pagingOptions.PageSize * pagingOptions.PageRange);
     }
 
     public static IQueryable<T> Paging<T>(this IQueryable<T> query, PagingOptions pagingOptions, out long totalRecords, out long totalPages)

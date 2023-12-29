@@ -90,7 +90,7 @@ public abstract class EFCoreRepository<TEntity>(DbContext context) : IEFCoreRepo
         return entity;
     }
 
-    public void Remove(TEntity entity)
+    public void Delete(TEntity entity)
     {
         _dbSet.Remove(entity);
     }
